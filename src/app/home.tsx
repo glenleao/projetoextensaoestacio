@@ -1,0 +1,37 @@
+import { View, Text, Alert } from "react-native"
+
+import { api } from "@/services/api"
+import { useEffect, useState } from "react"
+import { Categories, CategoriesProps } from "@/components/categories"
+
+import { Button } from "@/components/button"
+import {router } from "expo-router"
+
+
+export default function Home(){
+    const [categories, setCategories] = useState<CategoriesProps>([])
+
+    async function fetchCategories() {
+        try {
+            const { data } = await api.get("mabekos.glenleao.com.br/listar-dados.php")
+            setCategories(data)
+        } catch (error) {
+           console.log(error) 
+           Alert.alert("Tema", "Não foi possível carregar...")
+        }
+    }
+
+    useEffect(() => {
+        fetchCategories() 
+    }, [])
+    return (
+        <View style={{flex: 1 }}>
+            <Text>Glen3</Text>
+            <Categories data={categories}/>
+
+            <Button onPress={() =>router.navigate("/usuarios")} >
+                <Button.Title>Listar usuários</Button.Title>
+            </Button>
+        </View>
+    )
+}
