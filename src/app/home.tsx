@@ -13,7 +13,7 @@ export default function Home(){
 
     async function fetchCategories() {
         try {
-            const { data } = await api.get("mabekos.glenleao.com.br/listar-dados.php")
+            const { data } = await api.get("/")
             setCategories(data)
         } catch (error) {
            console.log(error) 
